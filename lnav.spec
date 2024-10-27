@@ -8,7 +8,6 @@ URL:           http://lnav.org
 Source0:       https://github.com/tstack/lnav/releases/download/v%{version}/%{name}-%{version}.tar.bz2
  
 BuildRequires: bzip2-devel
-BuildRequires: gcc-c++
 BuildRequires: libarchive-devel
 BuildRequires: libcurl-devel
 BuildRequires: make
@@ -34,7 +33,6 @@ BuildRequires: zlib-devel
 %make_install
  
 %files
-%doc AUTHORS NEWS.md README.md
-%license LICENSE
+%doc README.md
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.1*
