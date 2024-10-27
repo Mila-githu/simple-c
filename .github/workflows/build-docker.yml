@@ -13,6 +13,12 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v2
 
-      - name: Build Docker container with DNS
-        run: |
-          docker build --dns=8.8.8.8 -t my-container-image -f Dockerfile .
+      - name: Create a Docker network with custom DNS
+        run: docker network create --driver bridge custom_network
+
+      - name: Build Docker container
+        run: docker buildx build --network custom_network -t my-container-image -f Dockerfile .
+
+      - name: Remove Docker network
+        run: docker network rm custom_network
+
