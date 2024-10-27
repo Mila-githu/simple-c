@@ -5,8 +5,6 @@ FROM centos:7
 RUN sed -i 's|^mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/CentOS-* \
     && sed -i 's|^#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 
-ARG DNS_SERVER
-RUN echo "nameserver $DNS_SERVER" > /etc/resolv.conf
 # Install EPEL repository
 RUN yum install -y epel-release && yum update -y
 
