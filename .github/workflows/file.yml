@@ -4,7 +4,7 @@ on:
     tags:
       - "*.*.*"
 env:
-  DIST: el7
+  DIST: el9
   ARCH: noarch
 
 jobs:
