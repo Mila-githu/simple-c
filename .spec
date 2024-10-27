@@ -8,6 +8,7 @@ Source:         %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
 Requires:       bash, git, jq, unzip, tar
+BuildRequires: gcc make coreutils python3
 
 %description
 A simple C program
