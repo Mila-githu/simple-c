@@ -9,15 +9,10 @@ RUN sed -i 's|^mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/CentOS-* \
 RUN yum install -y epel-release && yum update -y
 
 # Install tools for building RPMs
-RUN yum install -y \
-    rpm-build \
-    rpmdevtools \
-    gcc \
-    make \
-    coreutils \
-    python \
-    git \
-    && yum clean all
+RUN yum install -y yum-utils && \
+    yum-config-manager --setopt=base.skip_if_unavailable=true --save && \
+    yum install -y rpm-build rpmdevtools gcc make coreutils python git
+
 
 # Set up RPM build directory structure
 RUN rpmdev-setuptree
