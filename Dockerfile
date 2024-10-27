@@ -1,21 +1,22 @@
-# Use Rocky Linux 9 as base image
-FROM rockylinux/rockylinux:9
+FROM centos:7
 
-# Enable PowerTools repository (needed for some development tools)
-RUN dnf install -y 'dnf-command(config-manager)' && \
-    dnf config-manager --set-enabled crb
+# Update repositories to use vault.centos.org
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
+    sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 
-# Install required packages for RPM building
-RUN dnf update -y && \
-    dnf install -y \
+# Install EPEL repository
+RUN yum install -y epel-release
+
+# Installing tools needed for rpmbuild
+RUN yum install -y \
     rpm-build \
     rpmdevtools \
     gcc \
     make \
     coreutils \
-    python3 \
+    python \
     git \
-    && dnf clean all
+    && yum clean all
 
 # Set up RPM build directory structure
 RUN rpmdev-setuptree
