@@ -1,15 +1,17 @@
+# Start from CentOS 7 base image
 FROM centos:7
 
+# Update repository links to vault.centos.org for archived CentOS 7
 RUN sed -i 's|^mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/CentOS-* \
     && sed -i 's|^#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 
-RUN ping -c 4 mirrorlist.centos.org
-RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
+# Optionally add Google DNS if required (uncomment if needed)
+# RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
 # Install EPEL repository
-RUN yum install -y epel-release
+RUN yum install -y epel-release && yum update -y
 
-# Installing tools needed for rpmbuild
+# Install tools for building RPMs
 RUN yum install -y \
     rpm-build \
     rpmdevtools \
@@ -23,8 +25,9 @@ RUN yum install -y \
 # Set up RPM build directory structure
 RUN rpmdev-setuptree
 
-# Set working directory
+# Set working directory for rpmbuild
 WORKDIR /root/rpmbuild
 
-# Keep container running
+# Keep container running with Bash
 ENTRYPOINT ["/bin/bash"]
+
