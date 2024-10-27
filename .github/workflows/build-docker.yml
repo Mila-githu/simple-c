@@ -1,0 +1,18 @@
+name: Build Docker Image
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Build Docker container with DNS
+        run: |
+          docker build --dns=8.8.8.8 -t my-container-image -f Dockerfile .
