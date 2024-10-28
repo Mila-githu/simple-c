@@ -1,5 +1,5 @@
 Name:           simple-c
-Version:        22.0.0
+Version:        23.0.0
 Release:        1%{?dist}
 
 License:        GPLv3
