@@ -6,6 +6,7 @@ on:
 env:
   DIST: el9
   ARCH: noarch
+  PKG_NAME: simple-c
 
 jobs:
   build_tarball:
