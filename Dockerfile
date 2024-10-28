@@ -1,9 +1,7 @@
 # Start from CentOS 7 base image
 FROM centos:7
 
-# Update repository links to vault.centos.org for archived CentOS 7
-RUN sed -i 's|^mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/CentOS-* \
-    && sed -i 's|^#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|^mirrorlist=|#mirrorlist=|g; s|^#baseurl=http|baseurl=http|g' /etc/yum.repos.d/CentOS-Base.repo
 
 # Install EPEL repository
 RUN yum install -y epel-release && yum update -y
