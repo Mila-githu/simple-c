@@ -2,8 +2,8 @@ name: Build RPM and DEB
 
 on:
   push:
-    branches:
-      - master
+      tags:
+      - "*.*.*"
 
 jobs:
   build:
