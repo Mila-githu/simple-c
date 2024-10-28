@@ -1,5 +1,4 @@
-# Start from CentOS 7 base image
-FROM centos:7
+FROM centos:7.9.2009
 
 RUN sed -i 's|^mirrorlist=|#mirrorlist=|g; s|^#baseurl=http|baseurl=http|g' /etc/yum.repos.d/CentOS-Base.repo
 
