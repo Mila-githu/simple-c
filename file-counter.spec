@@ -5,7 +5,7 @@ Release:        1%{?dist}
 Summary:        A script to count files in /etc
 
 License:        GPL
-Source0:        count_files.sh
+Source0:        file-counter.sh
 
 %description
 This package provides a script that counts files in the /etc directory, excluding directories and symlinks.
@@ -18,10 +18,10 @@ This package provides a script that counts files in the /etc directory, excludin
 
 %install
 install -d %{buildroot}/usr/local/bin
-install -m 0755 %{SOURCE0} %{buildroot}/usr/local/bin/count_files.sh
+install -m 0755 %{SOURCE0} %{buildroot}/usr/local/bin/file-counter.sh
 
 %files
-/usr/local/bin/count_files.sh
+/usr/local/bin/file-counter.sh
 
 %changelog
 * Tue Sep 24 2024 Your Name <your.email@example.com> 1.0-1
