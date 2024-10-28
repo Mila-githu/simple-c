@@ -1,6 +1,8 @@
-FROM centos:7.9.2009
+FROM rockylinux:8
 
 RUN sed -i 's|^mirrorlist=|#mirrorlist=|g; s|^#baseurl=http|baseurl=http|g' /etc/yum.repos.d/CentOS-Base.repo
+
+RUN echo "nameserver 8.8.8.8" >> /etc/resolv.conf
 
 # Install EPEL repository
 RUN yum install -y epel-release && yum update -y
