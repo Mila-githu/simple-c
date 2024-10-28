@@ -27,8 +27,8 @@ jobs:
     - name: Build DEB
       run: |
         mkdir -p file-counter-1.0/usr/local/bin
-        cp count_files.sh file-counter-1.0/usr/local/bin/
-        chmod 755 file-counter-1.0/usr/local/bin/count_files.sh
+        cp file-counter.sh file-counter-1.0/usr/local/bin/
+        chmod 755 file-counter-1.0/usr/local/bin/file-counter.sh
         mkdir -p file-counter-1.0/DEBIAN
         echo "Package: file-counter" > file-counter-1.0/DEBIAN/control
         echo "Version: 1.0" >> file-counter-1.0/DEBIAN/control
