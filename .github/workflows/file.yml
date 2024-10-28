@@ -39,3 +39,17 @@ jobs:
         echo "Maintainer: Your Name <your.email@example.com>" >> file-counter-1.0/DEBIAN/control
         echo "Description: A script to count files in /etc excluding directories and symlinks" >> file-counter-1.0/DEBIAN/control
         dpkg-deb --build file-counter-1.0
+
+        
+    - name: Upload RPM as artifact
+      uses: actions/upload-artifact@v3
+      with:
+       name: file-counter-rpm
+       path: ~/rpmbuild/RPMS/x86_64/file-counter-1.0-1.x86_64.rpm 
+
+    - name: Upload DEB as artifact
+      uses: actions/upload-artifact@v3
+      with:
+       name: file-counter-deb
+       path: file-counter-1.0.deb 
+       
