@@ -20,9 +20,10 @@ jobs:
 
     - name: Build RPM
       run: |
-        mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-        cp file-counter.sh ~/rpmbuild/SOURCES/
-        rpmbuild -ba --define "_topdir ~/rpmbuild" file-counter.spec
+        mkdir -p /home/runner/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+        cp file-counter.sh /home/runner/rpmbuild/SOURCES/
+        rpmbuild -ba --define "_topdir /home/runner/rpmbuild" file-counter.spec
+
 
     - name: Build DEB
       run: |
