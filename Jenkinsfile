@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/Mila-githu/file-counter.git
+                git url: 'https://github.com/Mila-githu/file-counter.git', credentialsId: '0c98cf49-40a4-4578-9bb5-3f079a68b616'
             }
         }
 
