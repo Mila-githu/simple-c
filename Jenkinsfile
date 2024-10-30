@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                git url: 'https://github.com/Mila-githu/simple-c.git', credentialsId: '0c98cf49-40a4-4578-9bb5-3f079a68b616'
+                git branch: 'main', url: 'https://github.com/Mila-githu/simple-c.git', credentialsId: '0c98cf49-40a4-4578-9bb5-3f079a68b616'
             }
         }
 
