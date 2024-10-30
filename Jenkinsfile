@@ -15,10 +15,9 @@ pipeline {
                 sudo apt-get install -y rpm dpkg-dev build-essential
 
                 # Prepare RPM structure
-                mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-                cp count_files.sh ~/rpmbuild/SOURCES/
-                chmod +x ~/rpmbuild/SOURCES/file-counter.sh  # Ensure executable
-                rpmbuild -ba file-counter.spec
+                mkdir -p /home/runner/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+                cp file-counter.sh /home/runner/rpmbuild/SOURCES/
+                rpmbuild -ba --define "_topdir /home/runner/rpmbuild" file-counter.spec
 
                 # Prepare DEB structure
                 mkdir -p file-counter-1.0/usr/local/bin
