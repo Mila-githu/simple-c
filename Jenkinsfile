@@ -3,9 +3,11 @@ pipeline {
 
     stages {
         stage('Clone repository') {
-            steps {
-                git 'https://github.com/Mila-githu/file-counter.git'
+           steps {
+            git branch: 'main', url: 'https://github.com/Mila-githu/file-counter.git'
             }
+    }
+
         }
 
         stage('Build RPM and DEB') {
