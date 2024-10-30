@@ -7,7 +7,8 @@ RUN apt-get update && apt-get install -y \
     docker.io \
     rpm \
     dpkg-dev \
-    build-essential
+    build-essential \
+    sudo
 
 # Add Jenkins user to the Docker group
 RUN usermod -aG docker jenkins
