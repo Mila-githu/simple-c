@@ -22,18 +22,16 @@ pipeline {
 
                 # Prepare DEB structure
                 mkdir -p file-counter-1.0/usr/local/bin
-                cp file-counter file-counter-1.0/usr/local/bin/
+                cp file-counter.sh file-counter-1.0/usr/local/bin/
                 chmod 755 file-counter-1.0/usr/local/bin/file-counter.sh
-
-                # Create DEBIAN control file for the DEB package
                 mkdir -p file-counter-1.0/DEBIAN
                 echo "Package: file-counter" > file-counter-1.0/DEBIAN/control
                 echo "Version: 1.0" >> file-counter-1.0/DEBIAN/control
+                echo "Section: base" >> file-counter-1.0/DEBIAN/control
+                echo "Priority: optional" >> file-counter-1.0/DEBIAN/control
                 echo "Architecture: all" >> file-counter-1.0/DEBIAN/control
-                echo "Maintainer: Serhii" >> file-counter-1.0/DEBIAN/control
-                echo "Description: File Counter Script" >> file-counter-1.0/DEBIAN/control
-
-                # Build the DEB package
+                echo "Maintainer: Your Name <your.email@example.com>" >> file-counter-1.0/DEBIAN/control
+                echo "Description: A script to count files in /etc excluding directories and symlinks" >> file-counter-1.0/DEBIAN/control
                 dpkg-deb --build file-counter-1.0
                 '''
             }
