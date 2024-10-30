@@ -3,11 +3,9 @@ pipeline {
 
     stages {
         stage('Clone repository') {
-           steps {
-            git branch: 'main', url: 'https://github.com/Mila-githu/file-counter.git'
+            steps {
+                git branch: 'main', url: 'https://github.com/Mila-githu/file-counter.git'
             }
-    }
-
         }
 
         stage('Build RPM and DEB') {
@@ -17,9 +15,9 @@ pipeline {
                 sudo apt-get install -y rpm dpkg-dev build-essential
 
                 # Prepare RPM structure
-                mkdir -p /home/runner/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-                cp file-counter.sh /home/runner/rpmbuild/SOURCES/
-                rpmbuild -ba --define "_topdir /home/runner/rpmbuild" file-counter.spec
+                mkdir -p $WORKSPACE/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+                cp file-counter.sh $WORKSPACE/rpmbuild/SOURCES/
+                rpmbuild -ba --define "_topdir $WORKSPACE/rpmbuild" file-counter.spec
 
                 # Prepare DEB structure
                 mkdir -p file-counter-1.0/usr/local/bin
@@ -42,7 +40,7 @@ pipeline {
             steps {
                 sh '''
                 # Install and test RPM
-                sudo rpm -ivh ~/rpmbuild/RPMS/x86_64/file-counter-1.0-1.x86_64.rpm || true
+                sudo rpm -ivh $WORKSPACE/rpmbuild/RPMS/x86_64/file-counter-1.0-1.x86_64.rpm || true
                 sudo dpkg -i file-counter-1.0.deb || true
 
                 # Run the script to test its functionality
@@ -54,7 +52,7 @@ pipeline {
 
     post {
         success {
-            archiveArtifacts artifacts: 'file-counter-1.0.deb, ~/rpmbuild/RPMS/x86_64/file-counter-1.0-1.x86_64.rpm', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'file-counter-1.0.deb, $WORKSPACE/rpmbuild/RPMS/x86_64/file-counter-1.0-1.x86_64.rpm', allowEmptyArchive: true
         }
     }
 }
