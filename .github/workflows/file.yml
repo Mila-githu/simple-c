@@ -2,7 +2,7 @@ name: Build RPM and DEB
 
 on:
   push:
-      tags:
+    tags:
       - "*.*.*"
 
 jobs:
@@ -24,7 +24,6 @@ jobs:
         cp file-counter.sh /home/runner/rpmbuild/SOURCES/
         rpmbuild -ba --define "_topdir /home/runner/rpmbuild" file-counter.spec
 
-
     - name: Build DEB
       run: |
         mkdir -p file-counter-1.0/usr/local/bin
@@ -36,20 +35,37 @@ jobs:
         echo "Section: base" >> file-counter-1.0/DEBIAN/control
         echo "Priority: optional" >> file-counter-1.0/DEBIAN/control
         echo "Architecture: all" >> file-counter-1.0/DEBIAN/control
-        echo "Maintainer: Your Name <your.email@example.com>" >> file-counter-1.0/DEBIAN/control
+        echo "Maintainer: Serhii" >> file-counter-1.0/DEBIAN/control
         echo "Description: A script to count files in /etc excluding directories and symlinks" >> file-counter-1.0/DEBIAN/control
         dpkg-deb --build file-counter-1.0
 
-        
-    - name: Upload RPM as artifact
-      uses: actions/upload-artifact@v3
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-       name: file-counter-rpm
-       path: ~/rpmbuild/RPMS/x86_64/file-counter-1.0-1.x86_64.rpm 
+        tag_name: ${{ github.ref_name }}
+        release_name: "Release ${{ github.ref_name }}"
+        draft: false
+        prerelease: false
 
-    - name: Upload DEB as artifact
-      uses: actions/upload-artifact@v3
+    - name: Upload RPM to Release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-       name: file-counter-deb
-       path: file-counter-1.0.deb 
-       
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: /home/runner/rpmbuild/RPMS/x86_64/file-counter-1.0-1.x86_64.rpm
+        asset_name: file-counter-1.0-1.x86_64.rpm
+        asset_content_type: application/x-rpm
+
+    - name: Upload DEB to Release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: file-counter-1.0.deb
+        asset_name: file-counter-1.0.deb
+        asset_content_type: application/x-debian-package
