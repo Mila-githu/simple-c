@@ -2,7 +2,7 @@ name: Build RPM and DEB
 
 on:
   push:
-    tags:
+      tags:
       - "*.*.*"
 
 jobs:
@@ -24,6 +24,7 @@ jobs:
         cp file-counter.sh /home/runner/rpmbuild/SOURCES/
         rpmbuild -ba --define "_topdir /home/runner/rpmbuild" file-counter.spec
 
+
     - name: Build DEB
       run: |
         mkdir -p file-counter-1.0/usr/local/bin
@@ -38,6 +39,19 @@ jobs:
         echo "Maintainer: Serhii" >> file-counter-1.0/DEBIAN/control
         echo "Description: A script to count files in /etc excluding directories and symlinks" >> file-counter-1.0/DEBIAN/control
         dpkg-deb --build file-counter-1.0
+
+        
+    - name: Upload RPM as artifact
+      uses: actions/upload-artifact@v3
+      with:
+       name: file-counter-rpm
+       path: ~/rpmbuild/RPMS/x86_64/file-counter-1.0-1.x86_64.rpm 
+
+    - name: Upload DEB as artifact
+      uses: actions/upload-artifact@v3
+      with:
+       name: file-counter-deb
+       path: file-counter-1.0.deb 
 
     - name: Create GitHub Release
       id: create_release
